@@ -34,5 +34,10 @@ html {
 
 body{
     color: var(--text-color);
-    background-color: var(--bg-color);
+    background-color: var(--bg-primary-color);
+}
+
+a:hover {
+  color: var(--bg-secondary-color);
+  text-decoration: none;
 }
