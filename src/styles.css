@@ -15,8 +15,11 @@
     --bg-lighten-color:rgba(223, 196, 160, 0.7);
     --bag-icon-color: #e9b05a;
 
+    /* icon outline color */
+    --icon-outline-color: #00989A;
+
     /* font */
-    --body-font: "Poppins", sans-serif;
+    --body-font: 'Poppins', sans-serif;
     }
 
 /* base */
@@ -35,9 +38,108 @@ html {
 body{
     color: var(--text-color);
     background-color: var(--bg-primary-color);
+    font-family: var(--body-font);
+    font-weight: 700;
 }
 
 a:hover {
   color: var(--bg-secondary-color);
   text-decoration: none;
+}
+
+/* image frame */
+@property --gap{
+    syntax: '<length>';
+    inherits: true;
+    initial-value: 0;
+}
+@property --angle{
+    syntax: '<angle>';
+    inherits: true;
+    initial-value: 0deg;
+}
+
+.imgFrame {
+    --border: 15px;
+    --gap: 15px;
+    --color: #0B486B;
+    
+    width: 220px;
+    aspect-ratio: 1;
+    box-sizing: border-box;
+    border-radius: 50%;
+    margin: 60px 0px 0px 20px;
+    cursor: pointer;
+    padding: calc(var(--border) + var(--gap));
+    
+    --angle: 90deg;
+    background:
+      radial-gradient(farthest-side,var(--color) 97%,#0000 101%) 85.35% 85.35%,
+      conic-gradient(from calc(180deg - var(--angle)/2),#0000 var(--angle),var(--color) 0),
+      radial-gradient(farthest-side,var(--color) 97%,#0000 101%) 14.65% 85.35%;
+    background-size: var(--border) var(--border),auto;
+    background-repeat: no-repeat;
+    
+    -webkit-mask:
+      radial-gradient(farthest-side, 
+       #000  calc(99%  - calc(var(--border) + var(--gap))),
+       #0000 calc(100% - calc(var(--border) + var(--gap))) 
+             calc(99%  - var(--border)), 
+       #000  calc(100% - var(--border)));
+            mask:
+      radial-gradient(farthest-side, 
+       #000  calc(99%  - calc(var(--border) + var(--gap))),
+       #0000 calc(100% - calc(var(--border) + var(--gap))) 
+             calc(99%  - var(--border)), 
+       #000  calc(100% - var(--border)));
+    transition: --angle .4s,--gap .4s;
+  }
+  .imgFrame:hover {
+    --angle: 0deg;
+    --gap: 5px;
+  }
+
+/* icon hover effect */
+.hover-fx {
+    font-size: 30px;
+    display: inline-block;
+    cursor: pointer;
+    width: 65px;
+    height: 65px;
+    line-height: 84px;
+    border-radius: 50%;
+    text-align: center;
+    position: relative;
+    color: var(--text-color);
+    transition: 300ms;
+  }
+  
+  .hover-fx:after {
+    pointer-events: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    content: '';
+    box-sizing: content-box;
+    box-shadow: 0 0 0 3px var(--text-color);
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: 300ms;
+  }
+  
+  .hover-fx:hover {
+    color: var(--icon-outline-color);
+  }
+  
+  .hover-fx:hover:after {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+
+.download-btn :hover{
+    color: #fafbfc;
+    transition: 300ms;
+    background-color: var(--bg-secondary-color);
 }
