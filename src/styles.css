@@ -2,3 +2,37 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+    /* text colors */
+    --text-color: #2D220E;
+    --text-color-light: #a57f3a;
+    --text-sectionHeaderColor: #3B1212;
+
+    /* background colors */
+    --bg-primary-color: #E3A342;
+    --bg-secondary-color: #92400E;
+    --bg-lighten-color:rgba(223, 196, 160, 0.7);
+    --bag-icon-color: #e9b05a;
+
+    /* font */
+    --body-font: "Poppins", sans-serif;
+    }
+
+/* base */
+
+*,
+::before,
+::after {
+  box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+  
+
+body{
+    color: var(--text-color);
+    background-color: var(--bg-color);
+}
