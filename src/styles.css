@@ -43,6 +43,10 @@ body{
     font-weight: 700;
 }
 
+input::placeholder, textarea::placeholder {
+  color: var(--bg-secondary-color);
+  opacity: 0.7;
+}
 a:hover {
   color: var(--bg-secondary-color);
   text-decoration: none;
@@ -260,4 +264,14 @@ a:hover {
   opacity: 0.7;
   transition: 0.3s;
   font-weight: 700;
+}
+
+/* social icon */
+.social__icon{
+  cursor: pointer;
+  border-radius: 50%;
+}
+.social__icon:hover{
+  transform: translateY(-3px);
+  box-shadow: 0 4px 17px rgba(0, 0, 0, 0.35);
 }
