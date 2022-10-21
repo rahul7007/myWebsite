@@ -19,7 +19,8 @@
     --icon-outline-color: #00989A;
 
     /* font */
-    --body-font: 'Poppins', sans-serif;
+    /* --body-font: 'Poppins', sans-serif; */
+    --body-font: 'Fuzzy Bubbles', cursive;
     }
 
 /* base */
@@ -142,4 +143,44 @@ a:hover {
     color: #fafbfc;
     transition: 300ms;
     background-color: var(--bg-secondary-color);
+}
+
+/* Sills & Experience */
+.sklExpBorder{
+  border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+  background-color: transparent;
+  border: .5rem solid var(--bg-secondary-color);
+}
+
+.sklExpDivider{
+  border-right: 3px solid var(--bg-lighten-color);
+  border-radius: 255px 150px 225px 13px/15px 225px 200px 255px;
+}
+
+.education__rounder {
+  position: relative;
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  background-color: #2D220D;
+  border-radius: 50%;
+}
+
+.education__rounder::before {
+  content: "";
+  position: absolute;
+  transform: translate(-4px, -4px);
+  width: 20px;
+  height: 20px;
+  border: 1px solid #2D220D;
+  border-radius: 50%;
+  margin-left: -6px;
+}
+
+.education__line {
+  display: block;
+  height: 55%;
+  width: 2px;
+  background-color: #2D220D;
+  transform: translate(15px, -2px);
 }
