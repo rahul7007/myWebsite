@@ -13,10 +13,13 @@
     --bg-primary-color: #E3A342;
     --bg-secondary-color: #92400E;
     --bg-lighten-color:rgba(223, 196, 160, 0.7);
-    --bag-icon-color: #e9b05a;
+    /* --bag-icon-color: #e9b05a; */
 
     /* icon outline color */
     --icon-outline-color: #00989A;
+
+    /* border */
+    --border-color: #e9b05a;
 
     /* font */
     /* --body-font: 'Poppins', sans-serif; */
@@ -153,7 +156,7 @@ a:hover {
 .sklExpBorder{
   border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
   background-color: transparent;
-  border: .5rem solid var(--bg-secondary-color);
+  border: .5rem solid var(--border-color);
   box-shadow: 0 4px 17px rgba(0, 0, 0, 0.35);
 }
 
@@ -192,7 +195,7 @@ a:hover {
 
 /* section header */
 .section__header{
-  border-color: var(--bg-secondary-color);
+  border-color: var(--border-color);
   border-radius: 50%;
 }
 
@@ -229,7 +232,7 @@ a:hover {
 .card{
   all: unset;
   border-radius: 4px;
-  border: 1px solid var(--bag-icon-color);
+  border: 1px solid var(--border-color);
   width: 200px;
   margin: 0 8px 16px;
   padding: 16px;
@@ -260,7 +263,7 @@ a:hover {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: var(--bag-icon-color);
+  background: var(--border-color);
   opacity: 0.7;
   transition: 0.3s;
   font-weight: 700;
@@ -274,4 +277,17 @@ a:hover {
 .social__icon:hover{
   transform: translateY(-3px);
   box-shadow: 0 4px 17px rgba(0, 0, 0, 0.35);
+}
+
+svg#clouds {
+  position: fixed;
+  bottom: -160px;
+  left: -230px;
+  z-index: -10;
+  width: 1920px;
+}
+
+.footer{
+  background-color: var(--bg-secondary-color);
+  color: var(--border-color);
 }
