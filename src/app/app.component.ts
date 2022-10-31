@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import axios from 'axios';
+import { NotificationService } from 'shared/services/notification.service';
 
 @Component({
   selector: 'app-root',
@@ -8,6 +9,9 @@ import axios from 'axios';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+
+  constructor(private notifyService : NotificationService) { }
+  
   title = 'myWebsite';
   popup = false;
   isVaildOtp = false;
@@ -41,7 +45,10 @@ export class AppComponent {
         console.log('Response from 1st API', response);
         this.isLoading = false
         if (response.data.statusCode === 200) {
+          this.notifyService.showInfo("An OTP has been send to your emailid !!", "Portfolio-Rahul")
           this.popup = true
+        } else {
+          this.notifyService.showError("Couldn't sent OTP, Please try again later", "Portfolio-Rahul")
         }
       })
   }
@@ -57,8 +64,10 @@ export class AppComponent {
         if (response.data.statusCode === 200) {
           console.log("OTP verification successful, Implement Message Content API")
           this.isVaildOtp = true;
+          this.notifyService.showSuccess("Message Sent!", "Portfolio-Rahul")
         } else {
           this.isVaildOtp = false;
+          this.notifyService.showError("Wrong OTP, try again!", "Portfolio-Rahul")
           console.log("OTP verification failed");
         }
       })
