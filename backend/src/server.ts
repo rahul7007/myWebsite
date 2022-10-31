@@ -17,7 +17,6 @@ app.use(bodyParser.json())
 
 let otp: any;
 app.post('/api/generateAndSendOtp', async (req, res) => {
-
   // generate OTP
   otp = Math.floor(1000 + Math.random() * 9000);
   console.log('otp', otp);
@@ -26,13 +25,13 @@ app.post('/api/generateAndSendOtp', async (req, res) => {
 
   // create reusable transporter object using the default SMTP transport
   const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    host: 'smtp.gmail.com',
+    service: process.env.SERVICE,
+    host: process.env.HOST,
     port: 587,
     secure: false,
     auth: {
-      user: 'rahulsarma7007@gmail.com',
-      pass: 'hibvlyxzrzayqzfg'
+      user: process.env.USER,
+      pass: process.env.PASSWORD
     },
     tls: {
       rejectUnauthorized: false
@@ -41,7 +40,7 @@ app.post('/api/generateAndSendOtp', async (req, res) => {
 
   const mailOptions = {
     from: 'noreply@portfolio.com',
-    to: 'rahulsarma9999@gmail.com',
+    to: req.body.email,
     subject: 'OTP-Verification',
     text: customMessage
   };
