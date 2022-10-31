@@ -11,6 +11,7 @@ export class AppComponent {
   title = 'myWebsite';
   popup = false;
   isVaildOtp = false;
+  isLoading = false;
 
   OtpVerifyForm = new FormGroup({
     otp: new FormControl('', [
@@ -32,11 +33,13 @@ export class AppComponent {
   });
 
   verifyEmailAndSendMessage() {
+    this.isLoading = true;
     const email = this.contactForm.value.email;
     const payload = { email };
     this.api.post(`/generateAndSendOtp`, payload)
       .then((response) => {
         console.log('Response from 1st API', response);
+        this.isLoading = false
         if (response.data.statusCode === 200) {
           this.popup = true
         }
@@ -44,11 +47,13 @@ export class AppComponent {
   }
 
   onSubmitOtp() {
+    this.isLoading = true;
     const payload = this.OtpVerifyForm.value;
 
     this.api.post(`/verifyOtp`, payload)
       .then((response) => {
         console.log('Response from 2nd API', response);
+        this.isLoading = false
         if (response.data.statusCode === 200) {
           console.log("OTP verification successful, Implement Message Content API")
           this.isVaildOtp = true;
