@@ -118,45 +118,45 @@
           Tools & Technologies
         </div>
         <div class="flex">
-        <div>
-          <ul class="flex flex-col p-4 pl-12">
-            <li class="flex flex-row mb-2">
-              <i class="fa fa-dot-circle-o" aria-hidden="true"></i> &nbsp; HTML
-            </li>
-            <li class="flex flex-row mb-2">
-              <i class="fa fa-dot-circle-o" aria-hidden="true"></i> &nbsp; CSS
-            </li>
-            <li class="flex flex-row mb-2">
-              <i class="fa fa-dot-circle-o" aria-hidden="true"></i> &nbsp; Javascript
-            </li>
-            <li class="flex flex-row mb-2">
-              <i class="fa fa-dot-circle-o" aria-hidden="true"></i> &nbsp; ReactJs
-            </li>
-            <li class="flex flex-row mb-2">
-              <i class="fa fa-dot-circle-o" aria-hidden="true"></i> &nbsp; NodeJs
-            </li>
-          </ul>
+          <div>
+            <ul class="flex flex-col p-4 pl-12">
+              <li class="flex flex-row mb-2">
+                <i class="fa fa-dot-circle-o" aria-hidden="true"></i> &nbsp; HTML
+              </li>
+              <li class="flex flex-row mb-2">
+                <i class="fa fa-dot-circle-o" aria-hidden="true"></i> &nbsp; CSS
+              </li>
+              <li class="flex flex-row mb-2">
+                <i class="fa fa-dot-circle-o" aria-hidden="true"></i> &nbsp; Javascript
+              </li>
+              <li class="flex flex-row mb-2">
+                <i class="fa fa-dot-circle-o" aria-hidden="true"></i> &nbsp; ReactJs
+              </li>
+              <li class="flex flex-row mb-2">
+                <i class="fa fa-dot-circle-o" aria-hidden="true"></i> &nbsp; NodeJs
+              </li>
+            </ul>
+          </div>
+          <div>
+            <ul class="flex flex-col p-4 pl-12">
+              <li class="flex flex-row mb-2">
+                <i class="fa fa-dot-circle-o" aria-hidden="true"></i> &nbsp; Bootstrap
+              </li>
+              <li class="flex flex-row mb-2">
+                <i class="fa fa-dot-circle-o" aria-hidden="true"></i> &nbsp; Tailwind CSS
+              </li>
+              <li class="flex flex-row mb-2">
+                <i class="fa fa-dot-circle-o" aria-hidden="true"></i> &nbsp; MySQL
+              </li>
+              <li class="flex flex-row mb-2">
+                <i class="fa fa-dot-circle-o" aria-hidden="true"></i> &nbsp; NoSQL
+              </li>
+              <li class="flex flex-row mb-2">
+                <i class="fa fa-dot-circle-o" aria-hidden="true"></i> &nbsp; GIT
+              </li>
+            </ul>
+          </div>
         </div>
-        <div>
-          <ul class="flex flex-col p-4 pl-12">
-          <li class="flex flex-row mb-2">
-            <i class="fa fa-dot-circle-o" aria-hidden="true"></i> &nbsp; Bootstrap
-          </li>
-          <li class="flex flex-row mb-2">
-            <i class="fa fa-dot-circle-o" aria-hidden="true"></i> &nbsp; Tailwind CSS
-          </li>
-          <li class="flex flex-row mb-2">
-            <i class="fa fa-dot-circle-o" aria-hidden="true"></i> &nbsp; MySQL
-          </li>
-          <li class="flex flex-row mb-2">
-            <i class="fa fa-dot-circle-o" aria-hidden="true"></i> &nbsp; NoSQL
-          </li>
-          <li class="flex flex-row mb-2">
-            <i class="fa fa-dot-circle-o" aria-hidden="true"></i> &nbsp; GIT
-          </li>
-      </ul>
-    </div>
-  </div>
       </div>
     </div>
 
@@ -239,7 +239,7 @@
 
     <div class="mt-20 border-2 rounded-lg project__wrapper w-3/4 mx-auto">
       <div class="card-container">
-        
+
         <div class="card">
           <div class="works__img">
             <img src='../assets/img/work1.jpg' alt="" />
@@ -300,11 +300,10 @@
     <div class="grid grid-cols-2 gap-6 mt-20 w-5/6 mx-auto">
       <div class="flex justify-center p-6 bg-transparent border-2 rounded-xl project__wrapper">
         <div class="block p-6 rounded-lg shadow-lg bg-transparent max-w-md">
-          <form>
+          <form [formGroup]="contactForm">
             <div class="grid grid-cols-2 gap-4">
               <div class="form-group mb-6">
-                <input type="text"
-                  class="
+                <input type="text" formControlName="name" class="
                   form-control
                   block
                   w-full
@@ -314,12 +313,10 @@
                   border-amber-800
                   outline-none
                   rounded
-                  "
-                  placeholder="Name*">
+                  " placeholder="Name*">
               </div>
               <div class="form-group mb-6">
-                <input type="tel" 
-                  class="
+                <input type="tel" formControlName="phone" class="
                   form-control
                   block
                   w-full
@@ -329,13 +326,11 @@
                   border-amber-800
                   outline-none
                   rounded
-                  "
-                  placeholder="Phone*">
+                  " placeholder="Phone*">
               </div>
             </div>
             <div class="form-group mb-6">
-              <input type="email" 
-                class="
+              <input type="email" formControlName="email" class="
                 form-control
                 block
                 w-full
@@ -345,12 +340,48 @@
                 border-amber-800
                 outline-none
                 rounded
-                "
-                placeholder="Email address*">
+                " placeholder="Email address*">
             </div>
+
+            <div class="overlay" *ngIf="popup">
+              <div class="popup">
+                <span class="text-4xl">OTP-Verification</span>
+                <a class="close" (click)="popup=false">&times;</a>
+                <div>
+                  <form [formGroup]="OtpVerifyForm" (ngSubmit)="popup=false" (ngSubmit)="onSubmitOtp()">
+                    <div class="flex mt-4">
+                      <div class="w-4/6 py-8 text-right px-2">
+                        <input maxlength="4" minlength="4" size="4" formControlName="otp" type="text" class="
+                                justify-end
+                                form-control
+                                block
+                                w-full
+                                px-3
+                                py-1.5
+                                text-base
+                                font-normal
+                                bg-transparent bg-clip-padding
+                                border border-solid border-amber-700
+                                rounded
+                                transition
+                                ease-in-out
+                                m-0
+                              focus:border-amber-900 focus:outline-none
+                              " id="exampleFormControlInput1" placeholder="Enter OTP" />
+                      </div>
+                      <div class="w-2/6 py-8 text-left px-2">
+                        <button
+                          class="border border-amber-700 rounded-lg bg-amber-700 text-white hover:bg-amber-900 px-8 py-1"
+                          type="submit">Verify</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+
             <div class="form-group mb-6">
-              <textarea 
-                class="
+              <textarea formControlName="message" class="
                 form-control
                 block
                 w-full
@@ -360,12 +391,9 @@
                 border-amber-800
                 outline-none
                 rounded
-                "
-                placeholder="Message*" 
-                cols="0" 
-                rows="5"></textarea>
+                " placeholder="Message*" cols="0" rows="5"></textarea>
             </div>
-            <button type="submit" class="
+            <button type="submit" (click)="popup=popup" (click)="verifyEmailAndSendMessage()" class="
               w-full
               px-6
               py-2
@@ -381,7 +409,9 @@
               hover:shadow-lg
               transition
               duration-150
-              ease-in-out">Send Message</button>
+              ease-in-out">
+              Send Message
+            </button>
           </form>
         </div>
       </div>
@@ -404,22 +434,24 @@
           <span class="ml-4 text-lg block">781016</span>
         </div>
 
-        <div class="text-right" > 
+        <div class="text-right">
           <span>
             <a href="https://wa.me/919085895248" target="_blank">
-              <img src="../assets/img/Whatsapp_logo_vector.png" height="48" width="48" class="mx-2 inline social__icon"/>
+              <img src="../assets/img/Whatsapp_logo_vector.png" height="48" width="48"
+                class="mx-2 inline social__icon" />
             </a>
           </span>
 
           <span>
             <a href="https://www.instagram.com/rahulsarma77/" target="_blank">
-              <img src="../assets/img/instagram_logo.png" height="48" width="48" class="mx-2 inline social__icon"/>
+              <img src="../assets/img/instagram_logo.png" height="48" width="48" class="mx-2 inline social__icon" />
             </a>
           </span>
 
           <span>
             <a href="https://www.facebook.com/rahulspark77/" target="_blank">
-              <img src="../assets/img/facebook_vector logo.png" height="48" width="48" class="mx-2 inline social__icon"/>
+              <img src="../assets/img/facebook_vector logo.png" height="48" width="48"
+                class="mx-2 inline social__icon" />
             </a>
           </span>
         </div>
@@ -445,5 +477,7 @@
 <!-- * * * * * * * * * * * background cloud * * * * * * * * * * * -->
 <svg id="clouds" xmlns="http://www.w3.org/2000/svg" width="2611.084" height="485.677" viewBox="0 0 2611.084 485.677">
   <title>Gray Clouds Background</title>
-  <path id="Path_39" data-name="Path 39" d="M2379.709,863.793c10-93-77-171-168-149-52-114-225-105-264,15-75,3-140,59-152,133-30,2.83-66.725,9.829-93.5,26.25-26.771-16.421-63.5-23.42-93.5-26.25-12-74-77-130-152-133-39-120-212-129-264-15-54.084-13.075-106.753,9.173-138.488,48.9-31.734-39.726-84.4-61.974-138.487-48.9-52-114-225-105-264,15a162.027,162.027,0,0,0-103.147,43.044c-30.633-45.365-87.1-72.091-145.206-58.044-52-114-225-105-264,15-75,3-140,59-152,133-53,5-127,23-130,83-2,42,35,72,70,86,49,20,106,18,157,5a165.625,165.625,0,0,0,120,0c47,94,178,113,251,33,61.112,8.015,113.854-5.72,150.492-29.764a165.62,165.62,0,0,0,110.861-3.236c47,94,178,113,251,33,31.385,4.116,60.563,2.495,86.487-3.311,25.924,5.806,55.1,7.427,86.488,3.311,73,80,204,61,251-33a165.625,165.625,0,0,0,120,0c51,13,108,15,157-5a147.188,147.188,0,0,0,33.5-18.694,147.217,147.217,0,0,0,33.5,18.694c49,20,106,18,157,5a165.625,165.625,0,0,0,120,0c47,94,178,113,251,33C2446.709,1093.793,2554.709,922.793,2379.709,863.793Z" transform="translate(142.69 -634.312)" fill="#e9b05a"/>
+  <path id="Path_39" data-name="Path 39"
+    d="M2379.709,863.793c10-93-77-171-168-149-52-114-225-105-264,15-75,3-140,59-152,133-30,2.83-66.725,9.829-93.5,26.25-26.771-16.421-63.5-23.42-93.5-26.25-12-74-77-130-152-133-39-120-212-129-264-15-54.084-13.075-106.753,9.173-138.488,48.9-31.734-39.726-84.4-61.974-138.487-48.9-52-114-225-105-264,15a162.027,162.027,0,0,0-103.147,43.044c-30.633-45.365-87.1-72.091-145.206-58.044-52-114-225-105-264,15-75,3-140,59-152,133-53,5-127,23-130,83-2,42,35,72,70,86,49,20,106,18,157,5a165.625,165.625,0,0,0,120,0c47,94,178,113,251,33,61.112,8.015,113.854-5.72,150.492-29.764a165.62,165.62,0,0,0,110.861-3.236c47,94,178,113,251,33,31.385,4.116,60.563,2.495,86.487-3.311,25.924,5.806,55.1,7.427,86.488,3.311,73,80,204,61,251-33a165.625,165.625,0,0,0,120,0c51,13,108,15,157-5a147.188,147.188,0,0,0,33.5-18.694,147.217,147.217,0,0,0,33.5,18.694c49,20,106,18,157,5a165.625,165.625,0,0,0,120,0c47,94,178,113,251,33C2446.709,1093.793,2554.709,922.793,2379.709,863.793Z"
+    transform="translate(142.69 -634.312)" fill="#e9b05a" />
 </svg>
