@@ -13,6 +13,7 @@ export class AppComponent {
   constructor(private notifyService : NotificationService) { }
   
   title = 'myWebsite';
+  // email : any = '';
   popup = false;
   isVaildOtp = false;
   isLoading = false;
@@ -38,19 +39,39 @@ export class AppComponent {
 
   verifyEmailAndSendMessage() {
     this.isLoading = true;
-    const email = this.contactForm.value.email;
+    const { email } = this.contactForm.value;
     const payload = { email };
     this.api.post(`/generateAndSendOtp`, payload)
       .then((response) => {
         console.log('Response from 1st API', response);
         this.isLoading = false
         if (response.data.statusCode === 200) {
-          this.notifyService.showInfo("An OTP has been send to your emailid !!")
+          this.notifyService.showInfo("OTP has been sent to your email id !!")
           this.popup = true
+          // this.email = email;
         } else {
           this.notifyService.showError("Couldn't sent OTP, Please try again later")
         }
       })
+  }
+
+  sendMessage() {
+    this.isLoading = true;
+
+    const { name, phone, email, message } = this.contactForm.value;
+
+    const payload = { name, phone, email, message };
+    this.api.post(`/sendMessage`, payload)
+    .then((response) => {
+      console.log('Response from 3rd API', response);
+      this.isLoading = false
+      if (response.data.statusCode === 200) {
+        this.popup = false
+        this.notifyService.showSuccess("Message Sent!")
+      } else {
+        this.notifyService.showError("Couldn't sent message, please try again later")
+      }
+    })
   }
 
   onSubmitOtp() {
@@ -64,7 +85,8 @@ export class AppComponent {
         if (response.data.statusCode === 200) {
           console.log("OTP verification successful, Implement Message Content API")
           this.isVaildOtp = true;
-          this.notifyService.showSuccess("Message Sent!")
+          // send the message
+          this.sendMessage();
         } else {
           this.isVaildOtp = false;
           this.notifyService.showError("Wrong OTP, try again!")

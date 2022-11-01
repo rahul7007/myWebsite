@@ -65,6 +65,47 @@ app.post('/api/verifyOtp', async (req, res) => {
   }
 });
 
+app.post('/api/sendMessage/', async(req, res)=>{
+    const { name, phone, email, message } = req.body;
+    // create reusable transporter object using the default SMTP transport
+    const transporter = nodemailer.createTransport({
+      service: process.env.SERVICE,
+      host: process.env.HOST,
+      port: 587,
+      secure: false,
+      auth: {
+        user: process.env.USER,
+        pass: process.env.PASSWORD
+      },
+      tls: {
+        rejectUnauthorized: false
+      }
+    });
+  
+    const mailOptions = {
+      from: 'noreply@portfolio.com',
+      to: req.body.email,
+      subject: 'Message From Portfolio - Rahul',
+      text: `
+        Sender: ${name}
+        Phone Number: ${phone}
+        Email: ${email}
+        Message: ${message}
+      `
+    };
+
+    // send mail with defined transport object
+    transporter.sendMail(mailOptions, function (err: any, data: any) {
+      if (err) {
+        console.log('Something wrong (Send Message)', err);
+        res.json({ success: false, statusCode: 500, message: 'Error while sending message' });
+      } else {
+        console.log('Message sent !!!');
+        res.json({ success: true, statusCode: 200, message: 'Message sent !' });
+      }
+    });
+})
+
 const port = 5000;
 
 app.listen(port, () => {
