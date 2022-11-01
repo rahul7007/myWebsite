@@ -45,10 +45,10 @@ export class AppComponent {
         console.log('Response from 1st API', response);
         this.isLoading = false
         if (response.data.statusCode === 200) {
-          this.notifyService.showInfo("An OTP has been send to your emailid !!", "Portfolio-Rahul")
+          this.notifyService.showInfo("An OTP has been send to your emailid !!")
           this.popup = true
         } else {
-          this.notifyService.showError("Couldn't sent OTP, Please try again later", "Portfolio-Rahul")
+          this.notifyService.showError("Couldn't sent OTP, Please try again later")
         }
       })
   }
@@ -64,10 +64,10 @@ export class AppComponent {
         if (response.data.statusCode === 200) {
           console.log("OTP verification successful, Implement Message Content API")
           this.isVaildOtp = true;
-          this.notifyService.showSuccess("Message Sent!", "Portfolio-Rahul")
+          this.notifyService.showSuccess("Message Sent!")
         } else {
           this.isVaildOtp = false;
-          this.notifyService.showError("Wrong OTP, try again!", "Portfolio-Rahul")
+          this.notifyService.showError("Wrong OTP, try again!")
           console.log("OTP verification failed");
         }
       })
