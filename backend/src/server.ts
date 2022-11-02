@@ -1,6 +1,7 @@
 import express from 'express';
 const bodyParser = require('body-parser')
 import cors from 'cors';
+const { sendEmail } = require('../helpers/mailer')
 
 const nodemailer = require('nodemailer');
 
@@ -15,95 +16,63 @@ app.use(cors({
 
 app.use(bodyParser.json())
 
+// send OTP
 let otp: any;
-app.post('/api/generateAndSendOtp', async (req, res) => {
+app.post('/api/generateOtp', async (req, res) => {
+  
   // generate OTP
   otp = Math.floor(1000 + Math.random() * 9000);
-  console.log('otp', otp);
+  console.log('OTP to be send', otp);
 
+  const emailTo = req.body.email;
+  const subject = 'OTP-Verification';
   const customMessage = `Dear user, OTP to verify your email is: ${otp}. Please use it verify your email id`;
 
-  // create reusable transporter object using the default SMTP transport
-  const transporter = nodemailer.createTransport({
-    service: process.env.SERVICE,
-    host: process.env.HOST,
-    port: 587,
-    secure: false,
-    auth: {
-      user: process.env.USER,
-      pass: process.env.PASSWORD
-    },
-    tls: {
-      rejectUnauthorized: false
-    }
-  });
-
-  const mailOptions = {
-    from: 'noreply@portfolio.com',
-    to: req.body.email,
-    subject: 'OTP-Verification',
-    text: customMessage
-  };
-
-  // send mail with defined transport object
-  transporter.sendMail(mailOptions, function (err: any, data: any) {
-    if (err) {
-      console.log('Something wrong (Send Email)', err);
-      res.json({ success: false, statusCode: 500, message: 'Error while sending email' });
+  // send OTP
+  sendEmail(emailTo, customMessage, subject, function (error: any) {
+    if (error) {
+      console.log('Error while sending OTP', error);
+      res.json({ success: false, statusCode: 500, message: "Couldn't sent OTP, Please try again later" });
     } else {
-      console.log('Email sent !!!');
-      res.json({ success: true, statusCode: 200, message: 'Email sent !' });
+      console.log('OTP has been sent')
+      res.json({ success: true, statusCode: 200, message: 'OTP has been sent to your email id' });
     }
-  });
+  })
 })
 
+// validate OTP
 app.post('/api/verifyOtp', async (req, res) => {
   if (otp === parseInt(req.body.otp)) {
-    res.json({ success: true, statusCode: 200, message: 'OTP Verified !' })
+    console.log('OTP verified');
+    res.json({ success: true, statusCode: 200 })
   } else {
-    res.json({ success: false, statusCode: 500, message: 'Incorrect OTP' })
+    console.log('Wrong OTP');
+    res.json({ success: false, statusCode: 500, message: 'Wrong OTP, try again' })
   }
 });
 
-app.post('/api/sendMessage/', async(req, res)=>{
-    const { name, phone, email, message } = req.body;
-    // create reusable transporter object using the default SMTP transport
-    const transporter = nodemailer.createTransport({
-      service: process.env.SERVICE,
-      host: process.env.HOST,
-      port: 587,
-      secure: false,
-      auth: {
-        user: process.env.USER,
-        pass: process.env.PASSWORD
-      },
-      tls: {
-        rejectUnauthorized: false
-      }
-    });
-  
-    const mailOptions = {
-      from: 'noreply@portfolio.com',
-      to: req.body.email,
-      subject: 'Message From Portfolio - Rahul',
-      text: `
-        Sender: ${name}
-        Phone Number: ${phone}
-        Email: ${email}
-        Message: ${message}
-      `
-    };
+// send message
+app.post('/api/sendMessage/', async (req, res) => {
+  const { name, phone, email, message } = req.body;
 
-    // send mail with defined transport object
-    transporter.sendMail(mailOptions, function (err: any, data: any) {
-      if (err) {
-        console.log('Something wrong (Send Message)', err);
-        res.json({ success: false, statusCode: 500, message: 'Error while sending message' });
-      } else {
-        console.log('Message sent !!!');
-        res.json({ success: true, statusCode: 200, message: 'Message sent !' });
-      }
-    });
+  const emailTo = req.body.email;
+  const subject = "Message From Rahul's Portfolio";
+  const customMessage = `
+    Sender: ${name}
+    Phone Number: ${phone}
+    Email: ${email}
+    Message: ${message}
+  `;
+
+  sendEmail(emailTo, customMessage, subject, function (error: any) {
+    if (error) {
+      console.log('Error while sending message', error);
+      res.json({ success: false, statusCode: 500, message: "Couldn't sent message, please try again later" });
+    } else {
+      console.log('Message has been sent')
+      res.json({ success: true, statusCode: 200, message: 'Message sent' });
+    }
+  })
 })
 
 const port = 5000;

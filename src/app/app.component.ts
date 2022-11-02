@@ -13,7 +13,6 @@ export class AppComponent {
   constructor(private notifyService : NotificationService) { }
   
   title = 'myWebsite';
-  // email : any = '';
   popup = false;
   isVaildOtp = false;
   isLoading = false;
@@ -41,16 +40,15 @@ export class AppComponent {
     this.isLoading = true;
     const { email } = this.contactForm.value;
     const payload = { email };
-    this.api.post(`/generateAndSendOtp`, payload)
+    this.api.post(`/generateOtp`, payload)
       .then((response) => {
         console.log('Response from 1st API', response);
         this.isLoading = false
         if (response.data.statusCode === 200) {
-          this.notifyService.showInfo("OTP has been sent to your email id !!")
+          this.notifyService.showInfo(response.data.message)
           this.popup = true
-          // this.email = email;
         } else {
-          this.notifyService.showError("Couldn't sent OTP, Please try again later")
+          this.notifyService.showError(response.data.message)
         }
       })
   }
@@ -67,9 +65,9 @@ export class AppComponent {
       this.isLoading = false
       if (response.data.statusCode === 200) {
         this.popup = false
-        this.notifyService.showSuccess("Message Sent!")
+        this.notifyService.showSuccess(response.data.message)
       } else {
-        this.notifyService.showError("Couldn't sent message, please try again later")
+        this.notifyService.showError(response.data.message)
       }
     })
   }
@@ -83,14 +81,11 @@ export class AppComponent {
         console.log('Response from 2nd API', response);
         this.isLoading = false
         if (response.data.statusCode === 200) {
-          console.log("OTP verification successful, Implement Message Content API")
           this.isVaildOtp = true;
-          // send the message
           this.sendMessage();
         } else {
           this.isVaildOtp = false;
-          this.notifyService.showError("Wrong OTP, try again!")
-          console.log("OTP verification failed");
+          this.notifyService.showError(response.data.message)
         }
       })
   }
